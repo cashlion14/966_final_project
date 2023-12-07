@@ -1,0 +1,23 @@
+var makeModel = function(f) {return function() {
+    var fair = flip()
+    var p_heads = fair ? 0.5 : 0.85
+    var flip1 = flip(p_heads) ? 'H' : 'T'
+    var flip2 = flip(p_heads) ? 'H' : 'T'
+    f(fair, flip1, flip2)
+}}
+
+var dist1 = Infer({method:'enumerate'}, makeModel(function(fair, flip1, flip2) {
+	condition(flip1 == 'T' && flip2 == 'T')
+	fair
+}))
+viz(dist1, {xLabel: 'Fair', yLabel: 'P(Fair | T,T)'})
+print("P(Fair=True | Flip1=Tails, Flip2=Tails) = " + Math.exp(dist1.score(true)))
+
+var dist2 = Infer({method:'enumerate'}, makeModel(function(fair, flip1, flip2) {
+	condition(flip2 == 'T')
+	flip1
+}))
+viz(dist2, {xLabel: 'Coin1', yLabel: 'P(Coin1 | Coin2=T)'})
+print("P(Coin1=Heads | Coin2=Tails) = " + Math.exp(dist2.score('H')))
+
+console.log('hello')
