@@ -1,0 +1,25 @@
+var makeModel = function(f) {return function() {
+    // Scenario 1: Lying motionless on ground
+    // Scenario 2: Rolling on the ground gripping chest
+    // Scenario 3: Running towards
+
+    var scenario = sample(Categorical({vs:[1, 2, 3]}))
+    var isScenario1 = (scenario == 1) ? 1 : 0
+    var isScenario2 = (scenario == 2) ? 1 : 0
+    var isScenario3 = (scenario == 3) ? 1 : 0
+
+    var guilty = sample(Categorical({ps: [isScenario1, isScenario2, isScenario3], vs: [flip(0.64), flip(0.55), flip(0.42)]}))
+
+    var emotion = guilty ? flip(0.8) : flip(0.1) // 0 = distressed, 1 = angry
+    var movement = guilty ? flip(0.7) : flip(0.5) // 0 = standing still, 1 = running away
+    var distance = guilty ? flip(0.3) : flip(0.8) // 0 = 5 feet, 1 = 20 feet
+
+    f(scenario, guilty, emotion, movement, distance)
+}}
+
+var dist1 = Infer({method:'enumerate'}, makeModel(function(scenario, guilty, emotion, movement, distance) {
+	condition(emotion == 1)
+	guilty
+}))
+viz(dist1, {xLabel: 'Fair', yLabel: 'P(Fair | T,T)'})
+print("P(Fair=True | Flip1=Tails, Flip2=Tails) = " + Math.exp(dist1.score(true)))
