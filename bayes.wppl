@@ -4,15 +4,25 @@ var makeModel = function(f) {return function() {
     // Scenario 3: Running towards
 
     var scenario = sample(Categorical({vs:[1, 2, 3]}))
-    var isScenario1 = (scenario == 1) ? 1 : 0
-    var isScenario2 = (scenario == 2) ? 1 : 0
-    var isScenario3 = (scenario == 3) ? 1 : 0
 
-    var guilty = sample(Categorical({ps: [isScenario1, isScenario2, isScenario3], vs: [flip(0.64), flip(0.55), flip(0.42)]}))
+    // Scenario 1
+    var guilty = flip(0.583)
+    var emotion = guilty ? flip(0.594) : flip(0.368)
+    var movement = guilty ? flip(0.586) : flip(0.380)
+    var distance = guilty ? flip(0.479) : flip(0.530)
 
-    var emotion = guilty ? flip(0.8) : flip(0.1) // 0 = distressed, 1 = angry
-    var movement = guilty ? flip(0.7) : flip(0.5) // 0 = standing still, 1 = running away
-    var distance = guilty ? flip(0.3) : flip(0.8) // 0 = 5 feet, 1 = 20 feet
+    if (scenario == 2) {
+        var guilty = flip(0.470)
+        var emotion = guilty ? flip(0.638) : flip(0.377)
+        var movement = guilty ? flip(0.586) : flip(0.424)
+        var distance = guilty ? flip(0.491) : flip(0.508)
+    } 
+    if (scenario == 3) {
+        var guilty = flip(0.320)
+        var emotion = guilty ? flip(0.609) : flip(0.449)
+        var movement = guilty ? flip(0.579) : flip(0.463)
+        var distance = guilty ? flip(0.496) : flip(0.502)
+    }
 
     f(scenario, guilty, emotion, movement, distance)
 }}
