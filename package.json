@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "webppl": "^0.9.15",
+    "webppl-viz": "github:probmods/webppl-viz"
+  }
+}
