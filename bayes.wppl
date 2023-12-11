@@ -94,7 +94,7 @@ var dist2001 = Infer({method:'enumerate'}, makeModel(function(scenario, guilty, 
     condition(scenario == 2 && distance == 0 && movement == 0 && emotion == 1)
 	guilty
 }))
-print("P(Guilty | 2001) = " + Math.exp(dist2000.score(true)))
+print("P(Guilty | 2001) = " + Math.exp(dist2001.score(true)))
 
 var dist2010 = Infer({method:'enumerate'}, makeModel(function(scenario, guilty, emotion, movement, distance) {
     condition(scenario == 2 && distance == 0 && movement == 1 && emotion == 0)
@@ -144,7 +144,7 @@ var dist3001 = Infer({method:'enumerate'}, makeModel(function(scenario, guilty, 
     condition(scenario == 3 && distance == 0 && movement == 0 && emotion == 1)
 	guilty
 }))
-print("P(Guilty | 3001) = " + Math.exp(dist3000.score(true)))
+print("P(Guilty | 3001) = " + Math.exp(dist3001.score(true)))
 
 var dist3010 = Infer({method:'enumerate'}, makeModel(function(scenario, guilty, emotion, movement, distance) {
     condition(scenario == 3 && distance == 0 && movement == 1 && emotion == 0)
